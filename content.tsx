@@ -7,6 +7,7 @@ export type PublicDoc = {
   description: string
   txtFile?: string
   docxFile?: string
+  registryRequired?: boolean
 }
 
 export type OverviewCard = {
@@ -24,7 +25,7 @@ export const overviewCards: OverviewCard[] = [
   {
     icon: <Blocks className="h-5 w-5" />,
     title: 'Продукт',
-    text: 'Программная платформа для централизованного управления корпоративным доступом к AI-функциональности, маршрутизации запросов, учета потребления и мониторинга.',
+    text: 'Программное обеспечение «Техкаталист ИИ» для централизованного управления корпоративным доступом к AI-функциональности, маршрутизации запросов, учета потребления и мониторинга.',
   },
   {
     icon: <Layers3 className="h-5 w-5" />,
@@ -65,11 +66,11 @@ export const capabilityGroups: CapabilityGroup[] = [
     ],
   },
   {
-    title: 'Экспертный экземпляр',
+    title: 'Проверка и эксплуатация',
     items: [
       'установка по инструкции с PostgreSQL, Prisma и environment-переменными',
       'тестовые учетные записи и тестовые ключи вместо production-данных',
-      'отдельные документы по функциональности, эксплуатации и проверке стенда',
+      'отдельные документы по функциональности, установке и эксплуатации программного обеспечения',
       'описание жизненного цикла, поддержки, устранения неисправностей и обновлений',
       'отдельные справки по сайту, тарифной политике и основаниям возникновения прав',
     ],
@@ -78,20 +79,36 @@ export const capabilityGroups: CapabilityGroup[] = [
 
 export const publicDocs: PublicDoc[] = [
   {
+    slug: 'functional-spec',
+    title: 'Описание функциональных характеристик программного обеспечения «Техкаталист ИИ»',
+    description:
+      'Основное описание назначения, пользовательских и административных функций, архитектурных модулей и сценариев применения программного обеспечения.',
+    txtFile: 'opisanie_funkcionalnyh_harakteristik_po_tehkatalist_ii.txt',
+    registryRequired: true,
+  },
+  {
+    slug: 'installation-guide',
+    title: 'Документация по установке программного обеспечения «Техкаталист ИИ»',
+    description:
+      'Информация, необходимая для развертывания, настройки окружения, подготовки зависимостей, базы данных и первого запуска программного обеспечения.',
+    txtFile: 'dokumentaciya_po_ustanovke_po_tehkatalist_ii.txt',
+    registryRequired: true,
+  },
+  {
+    slug: 'operations-guide',
+    title: 'Документация по эксплуатации программного обеспечения «Техкаталист ИИ»',
+    description:
+      'Информация, необходимая для эксплуатации, работы с ролями, типовыми сценариями, ограничениями, сопровождением и использованием тестового контура.',
+    txtFile: 'dokumentaciya_po_ekspluatacii_po_tehkatalist_ii.txt',
+    registryRequired: true,
+  },
+  {
     slug: 'product-overview',
     title: 'Продукт и правовой статус',
     description:
       'Общее описание программного продукта, классификация, модель предоставления и сведения об исключительном праве.',
     txtFile: 'spravka_samostoyatelnoe_sozdanie_po_techcatalyst_ai.txt',
     docxFile: 'spravka_samostoyatelnoe_sozdanie_po_techcatalyst_ai.docx',
-  },
-  {
-    slug: 'work-report',
-    title: 'Отчет о проведении работ',
-    description:
-      'Фиксация выполненных работ по созданию платформы, модульного состава и результата разработки.',
-    txtFile: 'otchet_o_provedenii_rabot_techcatalyst_ai.txt',
-    docxFile: 'otchet_o_provedenii_rabot_techcatalyst_ai.docx',
   },
   {
     slug: 'architecture',
@@ -134,31 +151,17 @@ export const publicDocs: PublicDoc[] = [
     docxFile: 'spravka_o_prinadlezhnosti_saita_techcatalyst_ai.docx',
   },
   {
-    slug: 'expert-installation',
-    title: 'Установка экспертного экземпляра',
+    slug: 'work-report',
+    title: 'Отчет о проведении работ',
     description:
-      'Инструкция по развертыванию, настройке PostgreSQL и Prisma, сборке и запуску экземпляра для проверки.',
-    txtFile: 'instrukciya_po_ustanovke_ekzemplyara_po_dlya_ekspertnoy_proverki.txt',
-    docxFile: 'instrukciya_po_ustanovke_ekzemplyara_po_dlya_ekspertnoy_proverki.docx',
-  },
-  {
-    slug: 'expert-functional-spec',
-    title: 'Функциональность экспертного экземпляра',
-    description:
-      'Описание проверяемых пользовательских, административных, биллинговых и интеграционных функций стенда.',
-    txtFile: 'opisanie_funkcionalnyh_harakteristik_ekzemplyara_po_dlya_ekspertnoy_proverki.txt',
-    docxFile: 'opisanie_funkcionalnyh_harakteristik_ekzemplyara_po_dlya_ekspertnoy_proverki.docx',
-  },
-  {
-    slug: 'expert-operations',
-    title: 'Эксплуатация экспертного экземпляра',
-    description:
-      'Правила работы с тестовыми учетными записями, разделами платформы, типовыми сценариями и ограничениями стенда.',
-    txtFile: 'ekspluatacionnaya_dokumentaciya_ekzemplyara_po_dlya_ekspertnoy_proverki.txt',
-    docxFile: 'ekspluatacionnaya_dokumentaciya_ekzemplyara_po_dlya_ekspertnoy_proverki.docx',
+      'Фиксация выполненных работ по созданию платформы, модульного состава и результата разработки.',
+    txtFile: 'otchet_o_provedenii_rabot_techcatalyst_ai.txt',
+    docxFile: 'otchet_o_provedenii_rabot_techcatalyst_ai.docx',
   },
 ]
 
 export const publicDocFiles = new Map(
   publicDocs.flatMap((doc) => [doc.txtFile, doc.docxFile].filter(Boolean).map((file) => [file, doc] as const))
 )
+
+export const registryRequiredDocs = publicDocs.filter((doc) => doc.registryRequired)

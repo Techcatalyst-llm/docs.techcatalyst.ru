@@ -2,9 +2,9 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'TechCatalyst AI Documentation',
+  title: 'Техкаталист ИИ — документация программного обеспечения',
   description:
-    'Public product information for TechCatalyst AI: architecture, functionality, lifecycle, licensing, tariffs, and expert review materials.',
+    'Документация правообладателя на программное обеспечение «Техкаталист ИИ»: функциональные характеристики, установка, эксплуатация, архитектура, жизненный цикл и правовой статус.',
 }
 
 export default function RootLayout({

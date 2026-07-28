@@ -2,9 +2,8 @@ module.exports = {
   apps: [
     {
       name: 'docs-techcatalyst-ru',
-      cwd: '/Users/ivanborisov/Desktop/MTS/techcatalyst-admin-panel/docs.techcatalyst.ru',
-      script: 'npm',
-      args: 'start',
+      cwd: '/var/www/docs.techcatalyst.ru',
+      script: '.next/standalone/server.js',
       env: {
         NODE_ENV: 'production',
         PORT: 3011,

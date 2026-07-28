@@ -11,6 +11,36 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Arial, sans-serif;
 }
 
+.docs-page {
+  background:
+    radial-gradient(circle at top right, rgba(226, 232, 240, 0.6), transparent 28%),
+    linear-gradient(180deg, #f8fafc 0%, #ffffff 22%, #f8fafc 100%);
+}
+
+.docs-panel {
+  @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+}
+
+.docs-muted {
+  @apply text-sm leading-7 text-slate-600;
+}
+
+.docs-table th {
+  @apply px-4 py-3 text-left font-medium text-slate-950;
+}
+
+.docs-table td {
+  @apply px-4 py-4 align-top leading-7 text-slate-600;
+}
+
+.docs-sidebar-link {
+  @apply block rounded-md px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-950;
+}
+
+.docs-chip {
+  @apply inline-flex items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.14em] text-slate-600;
+}
+
 ::selection {
   background: #e2e2fd;
 }

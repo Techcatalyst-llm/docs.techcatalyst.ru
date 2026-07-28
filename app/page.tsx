@@ -1,247 +1,287 @@
-import { ArrowUpRight, BadgeCheck, Download, FileText, Globe, Layers3, ShieldCheck, Wrench } from 'lucide-react'
-import { capabilityGroups, overviewCards, publicDocs } from '../content'
+import { Download, ExternalLink, FileText, ShieldCheck } from 'lucide-react'
+import { capabilityGroups, overviewCards, publicDocs, registryRequiredDocs } from '../content'
 
-function Wrap({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return <div className={`mx-auto max-w-[1140px] px-6 max-sm:px-[18px] ${className}`}>{children}</div>
+type SectionLink = {
+  id: string
+  label: string
 }
+
+const sectionLinks: SectionLink[] = [
+  { id: 'overview', label: 'Общие сведения' },
+  { id: 'core-docs', label: 'Основная документация' },
+  { id: 'capabilities', label: 'Функциональность' },
+  { id: 'architecture', label: 'Архитектура' },
+  { id: 'documents', label: 'Все документы' },
+  { id: 'legal', label: 'Правовой статус' },
+]
 
 function DocLink({ fileName, label }: { fileName: string; label: string }) {
   return (
     <a
       href={`/api/public-docs/${encodeURIComponent(fileName)}`}
-      className="inline-flex items-center gap-2 rounded-full border border-line bg-soft px-3.5 py-2 text-[13px] font-semibold text-ink transition-colors hover:border-blue hover:text-blue"
+      className="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50"
     >
-      <Download className="h-3.5 w-3.5" />
+      <Download className="h-4 w-4" />
       {label}
     </a>
   )
 }
 
+function SectionTitle({
+  id,
+  title,
+  description,
+}: {
+  id: string
+  title: string
+  description?: string
+}) {
+  return (
+    <div id={id} className="scroll-mt-24">
+      <h2 className="text-2xl font-semibold tracking-[-0.02em] text-slate-950">{title}</h2>
+      {description ? <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">{description}</p> : null}
+    </div>
+  )
+}
+
 export default function HomePage() {
   return (
-    <>
-      <header className="sticky top-0 z-50 border-b border-line bg-white/90 backdrop-blur-md">
-        <Wrap className="flex min-h-[68px] items-center justify-between gap-6 py-3 max-sm:min-h-[58px]">
-          <a href="#" className="flex items-center gap-2 text-lg font-bold tracking-[-0.01em] text-[#222]">
-            <span className="text-blue">▲</span>
-            <span>
-              Techcatalyst <span className="text-blue">Docs</span>
-            </span>
-          </a>
-          <div className="flex flex-wrap items-center gap-3">
-            <a
-              href="https://techcatalyst.ru"
-              className="rounded-full border border-line bg-white px-4 py-2 text-[14px] font-semibold text-ink transition-colors hover:border-blue hover:text-blue"
-            >
+    <div className="docs-page min-h-screen text-slate-900">
+      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
+          <div>
+            <div className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">Документация</div>
+            <div className="mt-1 text-lg font-semibold text-slate-950">Техкаталист ИИ</div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 text-sm">
+            <a href="https://techcatalyst.ru" className="text-slate-600 hover:text-slate-950">
               techcatalyst.ru
             </a>
             <a
-              href="https://app.techcatalyst.ru"
-              className="rounded-full bg-blue px-4 py-2 text-[14px] font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:bg-blue-bright hover:shadow-cta"
+              href="#documents"
+              className="rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-700 hover:bg-slate-50"
             >
-              app.techcatalyst.ru
+              Документы
             </a>
           </div>
-        </Wrap>
+        </div>
       </header>
 
-      <main>
-        <section
-          className="overflow-hidden py-24 pb-[84px] max-md:py-12 max-md:pb-11"
-          style={{
-            background:
-              'radial-gradient(900px 460px at 82% -12%, rgba(24,55,218,.07), transparent 60%), #fff',
-          }}
-        >
-          <Wrap className="grid grid-cols-[1.02fr_0.98fr] items-start gap-8 max-lg:grid-cols-1">
-            <div>
-              <span className="mb-3.5 inline-flex items-center gap-2 rounded-full bg-soft px-4 py-2 text-[13px] font-semibold uppercase tracking-[.12em] text-blue">
-                <BadgeCheck className="h-4 w-4" />
-                Product documentation
-              </span>
-              <h1 className="mb-5 text-[clamp(34px,4.4vw,54px)] font-bold leading-[1.12] tracking-[-.02em] text-[#222]">
-                TechCatalyst AI: публичный пакет документов и материалов о продукте.
-              </h1>
-              <p className="max-w-[700px] text-[clamp(16px,1.6vw,19px)] text-muted">
-                Раздел с описанием программного продукта, архитектуры, жизненного цикла, правового статуса,
-                тарифной модели и материалов для экспертной проверки и закупки.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href="#documents"
-                  className="inline-flex items-center gap-2 rounded-full bg-blue px-7 py-[13px] text-[15.5px] font-semibold text-white transition-all duration-200 hover:-translate-y-px hover:bg-blue-bright hover:shadow-cta"
-                >
-                  Перейти к документам
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-8 lg:grid-cols-[240px_minmax(0,1fr)]">
+        <aside className="hidden lg:block">
+          <div className="docs-panel sticky top-24 p-4">
+            <div className="mb-4 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">Содержание</div>
+            <nav className="space-y-1">
+              {sectionLinks.map((link) => (
+                <a key={link.id} href={`#${link.id}`} className="docs-sidebar-link">
+                  {link.label}
                 </a>
-                <a
-                  href="https://app.techcatalyst.ru"
-                  className="inline-flex items-center gap-2 rounded-full border border-[#d6dcec] bg-white px-7 py-[13px] text-[15.5px] font-semibold text-ink transition-all duration-200 hover:border-blue hover:text-blue"
-                >
-                  Открыть платформу
-                </a>
-              </div>
+              ))}
+            </nav>
+          </div>
+        </aside>
+
+        <main className="space-y-10">
+          <section className="docs-panel p-8">
+            <div className="docs-chip">
+              <ShieldCheck className="h-4 w-4" />
+              Сайт правообладателя
+            </div>
+            <h1 className="mt-5 text-4xl font-semibold tracking-[-0.03em] text-slate-950">
+              Документация программного обеспечения «Техкаталист ИИ»
+            </h1>
+            <p className="mt-4 max-w-4xl text-base leading-8 text-slate-600">
+              На странице размещены сведения о программном обеспечении, описание функциональных характеристик,
+              документация по установке и эксплуатации, а также сопроводительные технические и правовые материалы.
+            </p>
+          </section>
+
+          <section id="overview" className="docs-panel p-8">
+            <SectionTitle
+              id="overview-title"
+              title="Общие сведения"
+              description="Краткая информация о продукте, его классе, модели предоставления и назначении."
+            />
+
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              {overviewCards.map((card) => (
+                <article key={card.title} className="rounded-xl border border-slate-200 bg-slate-50/70 p-5">
+                  <div className="text-sm font-semibold text-slate-950">{card.title}</div>
+                  <p className="mt-2 text-sm leading-7 text-slate-600">{card.text}</p>
+                </article>
+              ))}
             </div>
 
-            <aside className="rounded-panel border border-line bg-white p-7 shadow-panel">
-              <div className="mb-5 flex items-center gap-3">
-                <div className="rounded-full bg-soft p-3 text-blue">
-                  <Globe className="h-5 w-5" />
-                </div>
-                <div>
-                  <div className="text-[22px] font-semibold tracking-[-.02em] text-[#222]">Ключевые сведения</div>
-                  <div className="text-[14px] text-muted">Для юристов, экспертов, закупки и технической команды</div>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                {[
-                  'Основной класс ПО: 02.06',
-                  'Дополнительный класс: 02.08',
-                  'ОКПД2: 62.01.29.000 и 58.29.50.000',
-                  'Модель предоставления: неисключительная лицензия',
-                  'Раздел документов обслуживается из текущего репозитория',
-                ].map((item) => (
-                  <div key={item} className="rounded-card border border-line bg-soft px-4 py-3 text-[14px] text-ink">
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </aside>
-          </Wrap>
-        </section>
-
-        <section className="pb-6">
-          <Wrap className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {overviewCards.map((card) => (
-              <article key={card.title} className="rounded-card border border-line bg-white p-6 shadow-card">
-                <div className="mb-4 inline-flex rounded-full bg-soft p-3 text-blue">{card.icon}</div>
-                <h2 className="text-[18px] font-semibold tracking-[-.02em] text-[#222]">{card.title}</h2>
-                <p className="mt-3 text-[15px] leading-7 text-muted">{card.text}</p>
-              </article>
-            ))}
-          </Wrap>
-        </section>
-
-        <section className="py-20">
-          <Wrap className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
-            <div className="rounded-panel border border-line bg-white p-7 shadow-panel">
-              <div className="flex items-center gap-3">
-                <div className="rounded-full bg-soft p-3 text-blue">
-                  <Layers3 className="h-5 w-5" />
-                </div>
-                <div>
-                  <h2 className="text-[28px] font-semibold tracking-[-.02em] text-[#222]">О продукте и архитектуре</h2>
-                  <p className="mt-1 text-[15px] text-muted">
-                    Сводка по функциональности, техническому стеку и составу экспертного экземпляра.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-6 space-y-5">
-                {capabilityGroups.map((group) => (
-                  <section key={group.title} className="rounded-card border border-line bg-soft p-5">
-                    <h3 className="text-[20px] font-semibold tracking-[-.02em] text-[#222]">{group.title}</h3>
-                    <ul className="mt-4 space-y-3 text-[15px] leading-7 text-muted">
-                      {group.items.map((item) => (
-                        <li key={item} className="flex gap-3">
-                          <span className="mt-[11px] h-2 w-2 rounded-full bg-blue" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                ))}
-              </div>
+            <div className="mt-6 overflow-hidden rounded-xl border border-slate-200">
+              <table className="docs-table w-full text-sm">
+                <tbody className="divide-y divide-slate-200">
+                  <tr className="bg-white">
+                    <th className="w-56">Наименование</th>
+                    <td>Техкаталист ИИ</td>
+                  </tr>
+                  <tr className="bg-slate-50">
+                    <th>Основной класс ПО</th>
+                    <td>02.06 Серверное и связующее программное обеспечение</td>
+                  </tr>
+                  <tr className="bg-white">
+                    <th>Дополнительный класс ПО</th>
+                    <td>02.08 Средства мониторинга и управления</td>
+                  </tr>
+                  <tr className="bg-slate-50">
+                    <th>Модель предоставления</th>
+                    <td>Неисключительная лицензия</td>
+                  </tr>
+                  <tr className="bg-white">
+                    <th>ОКПД2</th>
+                    <td>62.01.29.000 и 58.29.50.000</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </section>
 
-            <aside className="space-y-5">
-              <section className="rounded-panel border border-line bg-white p-7 shadow-panel">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-full bg-soft p-3 text-blue">
-                    <ShieldCheck className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-[24px] font-semibold tracking-[-.02em] text-[#222]">Правовой статус</h2>
-                    <p className="mt-1 text-[14px] text-muted">Данные для документирования и правовой проверки</p>
-                  </div>
-                </div>
-                <div className="mt-5 space-y-3 text-[15px] leading-7 text-muted">
-                  <p>Исключительное право принадлежит ИП Борисову Ивану Анатольевичу.</p>
-                  <p>ПО предоставляется по модели неисключительной лицензии.</p>
-                  <p>Сайты и домены используются правообладателем для размещения и документирования продукта.</p>
-                </div>
-              </section>
+          <section id="core-docs" className="docs-panel p-8">
+            <SectionTitle
+              id="core-docs-title"
+              title="Основная документация"
+              description="Ключевые документы по функциональности, установке и эксплуатации программного обеспечения."
+            />
 
-              <section className="rounded-panel border border-line bg-white p-7 shadow-panel">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-full bg-soft p-3 text-blue">
-                    <Wrench className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-[24px] font-semibold tracking-[-.02em] text-[#222]">Для экспертизы и закупки</h2>
-                    <p className="mt-1 text-[14px] text-muted">Материалы, которые обычно запрашивают на проверке</p>
-                  </div>
-                </div>
-                <div className="mt-5 space-y-3 text-[15px] leading-7 text-muted">
-                  <p>Описание функциональности, архитектуры, эксплуатации и жизненного цикла.</p>
-                  <p>Инструкция по установке экспертного экземпляра и работе с тестовыми учётными данными.</p>
-                  <p>Тарифная политика, сведения о принадлежности сайтов и документы по правам на ПО.</p>
-                </div>
-              </section>
-            </aside>
-          </Wrap>
-        </section>
-
-        <section id="documents" className="bg-soft py-20">
-          <Wrap>
-            <div className="mb-5 flex items-center gap-3">
-              <div className="rounded-full bg-white p-3 text-blue shadow-card">
-                <FileText className="h-5 w-5" />
-              </div>
-              <div>
-                <h2 className="text-[30px] font-semibold tracking-[-.02em] text-[#222]">Публичные документы</h2>
-                <p className="mt-1 text-[15px] text-muted">
-                  Базовый пакет материалов о продукте с TXT и DOCX-выгрузками.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid gap-4 lg:grid-cols-2">
-              {publicDocs.map((doc) => (
-                <article key={doc.slug} className="rounded-card border border-line bg-white p-6 shadow-card">
-                  <div className="flex items-start justify-between gap-4">
+            <div className="mt-6 grid gap-4 lg:grid-cols-3">
+              {registryRequiredDocs.map((doc) => (
+                <article key={doc.slug} className="rounded-xl border border-slate-200 bg-slate-50/70 p-5">
+                  <div className="flex items-start gap-3">
+                    <FileText className="mt-0.5 h-5 w-5 shrink-0 text-slate-500" />
                     <div>
-                      <h3 className="text-[20px] font-semibold tracking-[-.02em] text-[#222]">{doc.title}</h3>
-                      <p className="mt-3 text-[15px] leading-7 text-muted">{doc.description}</p>
+                      <h3 className="text-base font-semibold text-slate-950">{doc.title}</h3>
+                      <p className="mt-2 text-sm leading-7 text-slate-600">{doc.description}</p>
                     </div>
-                    <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-dim" />
                   </div>
-
-                  <div className="mt-5 flex flex-wrap gap-2">
+                  <div className="mt-4 flex flex-wrap gap-2">
                     {doc.txtFile ? <DocLink fileName={doc.txtFile} label="TXT" /> : null}
                     {doc.docxFile ? <DocLink fileName={doc.docxFile} label="DOCX" /> : null}
                   </div>
                 </article>
               ))}
             </div>
-          </Wrap>
-        </section>
-      </main>
+          </section>
 
-      <footer className="border-t border-line bg-white py-[38px] text-[14.5px] text-dim">
-        <Wrap className="flex flex-wrap items-center justify-between gap-[18px]">
-          <span>© 2026 Techcatalyst Docs</span>
-          <span>
-            <a href="mailto:info@2rm.ru" className="text-blue hover:underline">
-              info@2rm.ru
-            </a>{' '}
-            ·{' '}
-            <a href="https://techcatalyst.ru" target="_blank" rel="noopener noreferrer" className="text-blue hover:underline">
-              techcatalyst.ru
-            </a>
-          </span>
-        </Wrap>
-      </footer>
-    </>
+          <section id="capabilities" className="docs-panel p-8">
+            <SectionTitle
+              id="capabilities-title"
+              title="Функциональность"
+              description="Сводка по основным функциональным и эксплуатационным характеристикам программного обеспечения."
+            />
+
+            <div className="mt-6 space-y-6">
+              {capabilityGroups.map((group) => (
+                <section key={group.title}>
+                  <h3 className="text-lg font-semibold text-slate-950">{group.title}</h3>
+                  <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
+                    {group.items.map((item) => (
+                      <li key={item} className="flex gap-3">
+                        <span className="mt-3 h-1.5 w-1.5 rounded-full bg-slate-400" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
+          </section>
+
+          <section id="architecture" className="docs-panel p-8">
+            <SectionTitle
+              id="architecture-title"
+              title="Архитектура и развертывание"
+              description="Сводные технические сведения по стеку, сборке и эксплуатационному контуру."
+            />
+
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5">
+                <div className="text-sm font-semibold text-slate-950">Технологический стек</div>
+                <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
+                  <li>Next.js 14</li>
+                  <li>TypeScript</li>
+                  <li>React</li>
+                  <li>Node.js</li>
+                  <li>Prisma ORM</li>
+                  <li>PostgreSQL</li>
+                </ul>
+              </div>
+
+              <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5">
+                <div className="text-sm font-semibold text-slate-950">Развертывание</div>
+                <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
+                  <li>production-сборка выполняется командой `npm run build`</li>
+                  <li>серверный запуск выполняется через `next start` или `pm2`</li>
+                  <li>поддерживается развертывание на VPS, VDS и совместимой серверной инфраструктуре</li>
+                  <li>доступ к данным обеспечивается через PostgreSQL и серверные API-маршруты</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section id="documents" className="docs-panel p-8">
+            <SectionTitle
+              id="documents-title"
+              title="Все документы"
+              description="Полный комплект опубликованных документов, доступных для просмотра и скачивания."
+            />
+
+            <div className="mt-6 overflow-hidden rounded-xl border border-slate-200">
+              <table className="docs-table w-full text-sm">
+                <thead className="bg-slate-50 text-slate-700">
+                  <tr>
+                    <th>Документ</th>
+                    <th>Описание</th>
+                    <th>Файлы</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200 bg-white">
+                  {publicDocs.map((doc) => (
+                    <tr key={doc.slug} className="align-top">
+                      <td className="font-medium text-slate-950">{doc.title}</td>
+                      <td>{doc.description}</td>
+                      <td>
+                        <div className="flex flex-wrap gap-2">
+                          {doc.txtFile ? <DocLink fileName={doc.txtFile} label="TXT" /> : null}
+                          {doc.docxFile ? <DocLink fileName={doc.docxFile} label="DOCX" /> : null}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="legal" className="docs-panel p-8">
+            <SectionTitle
+              id="legal-title"
+              title="Правовой статус"
+              description="Сведения о правообладателе, модели предоставления и размещении документации."
+            />
+
+            <div className="mt-6 space-y-3 text-sm leading-7 text-slate-600">
+              <p>Исключительное право на программное обеспечение принадлежит ИП Борисову Ивану Анатольевичу.</p>
+              <p>Программное обеспечение предоставляется по модели неисключительной лицензии.</p>
+              <p>Сайт и домен используются правообладателем для размещения документации и сопроводительных материалов.</p>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href="https://techcatalyst.ru"
+                className="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+              >
+                Основной сайт
+                <ExternalLink className="h-4 w-4" />
+              </a>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
   )
 }
