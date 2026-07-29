@@ -151,11 +151,11 @@ export const docsSections: DocsSection[] = [
     links: [
       {
         slug: 'overview',
-        title: 'Что такое Takt',
+        title: 'Что такое TechCatalyst Guard',
         description: 'Краткое описание платформы и состава продукта.',
         tags: ['обзор', 'продукт'],
         body: [
-          'Takt объединяет управление доступом к AI-инструментам, политики безопасности, события, расследования и отчетность.',
+          'TechCatalyst Guard защищает рабочие станции разработчиков при работе с ИИ-агентами и инструментами автоматизации.',
           'В состав входят панель управления, серверная часть, база данных и агенты на рабочих станциях.',
           'Основные рабочие зоны: станции, события, политики, роли, интеграции, качество детекторов и источники AI-угроз.',
         ],
@@ -437,7 +437,7 @@ export const docsSections: DocsSection[] = [
           'Keycloak используется для корпоративного входа. В продукте нужно прописать issuer, client id, client secret, redirect URL и правила сопоставления групп с ролями.',
           'Проверяйте вход отдельно для administrator, security_officer, viewer и developer. Для каждой роли права в интерфейсе и API сверяются отдельно.',
         ],
-        example: 'CONTROL_PLANE_OIDC_ISSUER_URL=https://keycloak.example.com/realms/takt\nCONTROL_PLANE_OIDC_CLIENT_ID=takt-admin\nCONTROL_PLANE_OIDC_REDIRECT_URL=https://model.ai-guard.pro/api/auth/callback/oidc',
+        example: 'CONTROL_PLANE_OIDC_ISSUER_URL=https://keycloak.example.com/realms/guard\nCONTROL_PLANE_OIDC_CLIENT_ID=guard-admin\nCONTROL_PLANE_OIDC_REDIRECT_URL=https://model.ai-guard.pro/api/auth/callback/oidc',
       },
       {
         slug: 'loki',
@@ -449,7 +449,7 @@ export const docsSections: DocsSection[] = [
           'После настройки проверьте очередь отправки, принудительную отправку накопленных событий и фактическое появление записи в Loki.',
           'Если используется отдельное пространство Loki, укажите его идентификатор в настройках отправки.',
         ],
-        example: 'CONTROL_PLANE_LOKI_ENDPOINT_URL=https://loki.example.com/loki/api/v1/push\nCONTROL_PLANE_LOKI_TENANT_ID=takt',
+        example: 'CONTROL_PLANE_LOKI_ENDPOINT_URL=https://loki.example.com/loki/api/v1/push\nCONTROL_PLANE_LOKI_TENANT_ID=guard',
       },
       {
         slug: 'opentelemetry',
@@ -634,7 +634,7 @@ export const publicDocs: PublicDoc[] = [
     slug: 'architecture',
     title: 'Техническая архитектура',
     description:
-      'Пользовательская часть, серверная часть, база данных, API, маршрутизация, мониторинг и биллинг.',
+      'Пользовательская часть, серверная часть, база данных, API, маршрутизация, мониторинг и журнал событий.',
     docxFile: 'opisanie_tehnicheskoy_arhitektury_techcatalyst_ai.docx',
   },
   {

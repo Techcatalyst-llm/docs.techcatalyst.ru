@@ -4,9 +4,9 @@ export function DocsTopbar() {
   return (
     <header className="topbar">
       <a className="brand" href="/">
-        <span className="brand-mark">T</span>
+        <span className="brand-mark">G</span>
         <span>
-          <strong>Документация Takt</strong>
+          <strong>Документация Guard</strong>
           <small>Пользовательские и технические руководства</small>
         </span>
       </a>
