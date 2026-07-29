@@ -2,9 +2,9 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Takt Docs — документация платформы',
+  title: 'Документация Takt',
   description:
-    'Русскоязычная пользовательская и техническая документация Takt и Techcatalyst Guard: что где находится, как работает и как проверить.',
+    'Русскоязычная документация Takt: руководства, администрирование, эксплуатация, интеграции, API и безопасность.',
 }
 
 export default function RootLayout({

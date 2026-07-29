@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  @apply bg-slate-50 text-ink antialiased;
+  @apply bg-slate-50 text-slate-950 antialiased;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Arial, sans-serif;
 }
 
@@ -15,206 +15,292 @@ body {
   background: #f8fafc;
 }
 
+.topbar {
+  @apply sticky top-0 z-40 flex items-center justify-between gap-4 border-b border-slate-200 bg-white px-5 py-3;
+}
+
+.brand {
+  @apply flex min-w-0 items-center gap-3 text-slate-950;
+}
+
 .brand-mark {
-  @apply flex h-9 w-9 items-center justify-center rounded-md bg-slate-950 text-sm font-semibold text-white;
+  @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-slate-950 text-sm font-semibold text-white;
 }
 
-.top-link {
-  @apply rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50;
+.brand strong {
+  @apply block text-sm font-semibold;
 }
 
-.top-link-strong {
-  @apply border-slate-950 bg-slate-950 text-white hover:bg-slate-800;
+.brand small {
+  @apply block truncate text-xs text-slate-500;
 }
 
-.side-nav {
-  @apply sticky top-20 rounded-md border border-slate-200 bg-white p-4 shadow-sm;
+.topnav {
+  @apply hidden items-center gap-1 md:flex;
 }
 
-.side-title,
-.section-eyebrow {
-  @apply text-xs font-semibold uppercase tracking-[0.14em] text-slate-500;
+.topnav a {
+  @apply rounded-md px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-950;
 }
 
-.side-link {
-  @apply block rounded-md px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-950;
+.layout {
+  @apply mx-auto grid max-w-[1500px] gap-6 px-5 py-6 lg:grid-cols-[260px_minmax(0,1fr)];
 }
 
-.side-note {
-  @apply mt-5 rounded-md border border-slate-200 bg-slate-50 p-3 text-xs leading-6 text-slate-600;
+.sidebar {
+  @apply hidden h-fit rounded-md border border-slate-200 bg-white p-3 shadow-sm lg:sticky lg:top-20 lg:block;
 }
 
-.docs-panel,
-.intro-panel {
-  @apply rounded-md border border-slate-200 bg-white shadow-sm;
+.sidebar-group {
+  @apply mb-3 border-b border-slate-200 pb-3 last:mb-0 last:border-b-0 last:pb-0;
 }
 
-.intro-panel {
-  @apply grid gap-5 p-6 xl:grid-cols-[minmax(0,1fr)_420px];
+.sidebar-title {
+  @apply px-3 pb-2 text-xs font-semibold uppercase tracking-[0.14em] text-slate-500;
 }
 
-.intro-copy h1 {
-  @apply mt-4 max-w-4xl text-3xl font-semibold tracking-[-0.02em] text-slate-950 md:text-4xl;
+.sidebar a {
+  @apply block rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-950;
 }
 
-.intro-copy p {
-  @apply mt-4 max-w-4xl text-base leading-8 text-slate-600;
+.content {
+  @apply min-w-0 space-y-6;
 }
 
-.status-line {
-  @apply inline-flex items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium uppercase tracking-[0.12em] text-slate-600;
+.hero {
+  @apply rounded-md border border-slate-200 bg-white p-5 shadow-sm md:p-6;
 }
 
-.intro-metrics {
-  @apply grid gap-3 sm:grid-cols-3 xl:grid-cols-1;
+.section {
+  @apply scroll-mt-24;
 }
 
-.intro-metrics > div {
-  @apply rounded-md border border-slate-200 bg-slate-50 p-4;
+.eyebrow,
+.section-head p {
+  @apply text-xs font-semibold uppercase tracking-[0.14em] text-red-700;
 }
 
-.intro-metrics span {
-  @apply block text-2xl font-semibold text-red-600;
+.hero h1 {
+  @apply mt-2 max-w-4xl text-3xl font-semibold tracking-normal md:text-4xl;
 }
 
-.intro-metrics strong {
+.hero > p {
+  @apply mt-3 max-w-4xl text-base leading-8 text-slate-600;
+}
+
+.searchbox {
+  @apply mt-5 flex max-w-4xl items-center gap-3 rounded-md border border-slate-300 bg-white px-4 py-3;
+}
+
+.searchbox input {
+  @apply min-w-0 flex-1 bg-transparent text-base outline-none placeholder:text-slate-400;
+}
+
+.search-results {
+  @apply mt-4 max-w-4xl overflow-hidden rounded-md border border-slate-200;
+}
+
+.search-results-title {
+  @apply border-b border-slate-200 bg-slate-50 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500;
+}
+
+.search-result {
+  @apply block border-b border-slate-100 px-4 py-3 last:border-b-0 hover:bg-slate-50;
+}
+
+.search-result span {
+  @apply text-xs font-medium text-red-700;
+}
+
+.search-result strong {
   @apply mt-1 block text-sm text-slate-950;
 }
 
-.intro-metrics p {
-  @apply mt-1 text-xs leading-5 text-slate-600;
+.search-result small {
+  @apply mt-1 block text-sm leading-6 text-slate-600;
 }
 
-.section-title {
-  @apply mt-2 text-2xl font-semibold tracking-[-0.02em] text-slate-950;
+.empty-result {
+  @apply px-4 py-4 text-sm text-slate-600;
 }
 
-.section-text {
-  @apply mt-2 max-w-4xl text-sm leading-7 text-slate-600;
+.section-head h2 {
+  @apply mt-1 text-2xl font-semibold tracking-normal;
 }
 
-.track-card,
-.qa-card,
-.scenario-card,
-.runbook-card,
-.control-card,
-.file-card {
+.guide-grid {
+  @apply mt-5 grid gap-4 xl:grid-cols-2;
+}
+
+.guide-card {
   @apply rounded-md border border-slate-200 bg-slate-50 p-4;
 }
 
-.track-head {
-  @apply flex flex-col gap-2 border-b border-slate-200 pb-3;
+.guide-meta {
+  @apply flex flex-wrap gap-2;
 }
 
-.track-head h3,
-.qa-card h3,
-.scenario-card h3,
-.runbook-card h3,
-.control-card h3,
-.file-card h3 {
-  @apply text-base font-semibold text-slate-950;
+.guide-meta span {
+  @apply rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-600;
 }
 
-.track-head span,
-.scenario-role,
-.runbook-owner {
-  @apply text-xs font-medium uppercase tracking-[0.12em] text-red-700;
+.guide-card h3 {
+  @apply mt-4 text-lg font-semibold text-slate-950;
 }
 
-.track-card p,
-.qa-card p,
-.control-card p,
-.file-card p {
-  @apply mt-3 text-sm leading-7 text-slate-600;
+.guide-card p {
+  @apply mt-2 text-sm leading-7 text-slate-600;
 }
 
-.tag-list {
-  @apply mt-4 flex flex-wrap gap-2;
+.guide-card ol {
+  @apply mt-4 space-y-2 pl-5 text-sm leading-6 text-slate-700;
 }
 
-.tag-list span {
-  @apply rounded-md border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-700;
-}
-
-.qa-card dl {
-  @apply mt-4 grid gap-3;
-}
-
-.qa-card dl > div {
-  @apply rounded-md border border-slate-200 bg-white p-3;
-}
-
-.qa-card dt {
-  @apply text-xs font-semibold uppercase tracking-[0.12em] text-slate-500;
-}
-
-.qa-card dd {
-  @apply mt-1 text-sm leading-6 text-slate-700;
-}
-
-.scenario-card ol,
-.runbook-card ul {
-  @apply mt-4 space-y-2 text-sm leading-6 text-slate-700;
-}
-
-.scenario-card li,
-.runbook-card li {
-  @apply ml-5;
-}
-
-.scenario-card li {
+.guide-card li {
   @apply list-decimal;
 }
 
-.runbook-card li {
-  @apply list-disc;
+.guide-result {
+  @apply mt-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm leading-6 text-emerald-900;
 }
 
-.system-row {
-  @apply grid gap-0 border-b border-slate-200 bg-white text-sm leading-6 text-slate-700 last:border-b-0 lg:grid-cols-[220px_minmax(0,1.2fr)_minmax(0,0.9fr)_minmax(0,1fr)];
+.section-list {
+  @apply mt-5 space-y-4;
 }
 
-.system-row > div {
+.docs-section {
+  @apply scroll-mt-24 rounded-md border border-slate-200 bg-slate-50;
+}
+
+.docs-section-head {
+  @apply border-b border-slate-200 bg-white p-4;
+}
+
+.docs-section-head h3 {
+  @apply text-lg font-semibold;
+}
+
+.docs-section-head p {
+  @apply mt-1 text-sm leading-6 text-slate-600;
+}
+
+.article-list {
+  @apply divide-y divide-slate-200;
+}
+
+.article-card {
+  @apply grid gap-4 bg-white p-4 lg:grid-cols-[minmax(0,1fr)_220px];
+}
+
+.article-main {
+  @apply min-w-0;
+}
+
+.article-main h4 {
+  @apply text-base font-semibold text-slate-950;
+}
+
+.article-main > p {
+  @apply mt-1 text-sm leading-6 text-slate-600;
+}
+
+.article-body {
+  @apply mt-4 space-y-3 text-sm leading-7 text-slate-700;
+}
+
+.article-body p {
+  @apply max-w-4xl;
+}
+
+.article-steps {
+  @apply mt-4 space-y-2 pl-5 text-sm leading-6 text-slate-700;
+}
+
+.article-steps li {
+  @apply list-decimal;
+}
+
+.code-sample {
+  @apply mt-4 max-w-full overflow-x-auto rounded-md border border-slate-200 bg-slate-950 p-4 text-sm leading-6 text-slate-100;
+}
+
+.article-result {
+  @apply mt-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm leading-6 text-slate-700;
+}
+
+.tag-list {
+  @apply flex flex-wrap items-start gap-2;
+}
+
+.tag-list span {
+  @apply rounded-md border border-slate-200 bg-white px-2 py-1 text-xs text-slate-600;
+}
+
+.faq-list {
+  @apply mt-5 divide-y divide-slate-200 overflow-hidden rounded-md border border-slate-200;
+}
+
+.faq-list details {
+  @apply bg-white;
+}
+
+.faq-list summary {
+  @apply cursor-pointer px-4 py-4 text-sm font-semibold text-slate-950;
+}
+
+.faq-list p {
+  @apply px-4 pb-4 text-sm leading-7 text-slate-600;
+}
+
+.formal-grid {
+  @apply mt-5 grid gap-4 lg:grid-cols-3;
+}
+
+.formal-card {
+  @apply flex min-h-[210px] flex-col rounded-md border border-slate-200 bg-slate-50 p-4;
+}
+
+.formal-card h3 {
+  @apply mt-3 text-base font-semibold;
+}
+
+.formal-card p {
+  @apply mt-2 flex-1 text-sm leading-6 text-slate-600;
+}
+
+.formal-card div {
+  @apply flex flex-wrap gap-2;
+}
+
+.file-table {
+  @apply mt-5 overflow-hidden rounded-md border border-slate-200;
+}
+
+.file-row {
+  @apply grid border-b border-slate-200 bg-white text-sm leading-6 text-slate-700 last:border-b-0 lg:grid-cols-[minmax(220px,0.85fr)_minmax(0,1.2fr)_260px];
+}
+
+.file-row > div {
   @apply border-b border-slate-100 p-3 lg:border-b-0 lg:border-r lg:border-slate-100 last:border-r-0;
 }
 
-.system-head {
-  @apply bg-slate-100 text-xs font-semibold uppercase tracking-[0.12em] text-slate-600;
+.file-row-head {
+  @apply bg-slate-100 text-xs font-semibold uppercase tracking-[0.12em] text-slate-500;
 }
 
-.system-area {
-  @apply flex items-center gap-2;
-}
-
-.system-area span {
-  @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-red-700;
-}
-
-.docs-table-row {
-  @apply grid gap-0 border-b border-slate-200 bg-white text-sm leading-6 text-slate-700 last:border-b-0 lg:grid-cols-[minmax(220px,0.85fr)_minmax(0,1.2fr)_260px];
-}
-
-.docs-table-row > div {
-  @apply border-b border-slate-100 p-3 lg:border-b-0 lg:border-r lg:border-slate-100 last:border-r-0;
-}
-
-.docs-table-head {
-  @apply bg-slate-100 text-xs font-semibold uppercase tracking-[0.12em] text-slate-600;
+.file-actions {
+  @apply flex flex-wrap gap-2;
 }
 
 .doc-button {
-  @apply inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50;
+  @apply inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 hover:border-slate-400 hover:bg-slate-50;
 }
 
-.file-card {
-  @apply flex min-h-[230px] flex-col bg-white;
-}
-
-.docs-footer {
+.footer {
   @apply flex flex-col justify-between gap-3 rounded-md border border-slate-200 bg-white px-5 py-4 text-sm text-slate-600 md:flex-row md:items-center;
 }
 
-.docs-footer a {
+.footer a {
   @apply inline-flex items-center gap-2 text-slate-950 hover:text-red-700;
 }
 
