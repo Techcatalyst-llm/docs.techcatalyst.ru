@@ -7,40 +7,217 @@ html {
 }
 
 body {
-  @apply bg-white text-ink antialiased;
+  @apply bg-slate-50 text-ink antialiased;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Arial, sans-serif;
 }
 
 .docs-page {
-  background:
-    radial-gradient(circle at top right, rgba(226, 232, 240, 0.6), transparent 28%),
-    linear-gradient(180deg, #f8fafc 0%, #ffffff 22%, #f8fafc 100%);
+  background: #f8fafc;
 }
 
-.docs-panel {
-  @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+.brand-mark {
+  @apply flex h-9 w-9 items-center justify-center rounded-md bg-slate-950 text-sm font-semibold text-white;
 }
 
-.docs-muted {
-  @apply text-sm leading-7 text-slate-600;
+.top-link {
+  @apply rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50;
 }
 
-.docs-table th {
-  @apply px-4 py-3 text-left font-medium text-slate-950;
+.top-link-strong {
+  @apply border-slate-950 bg-slate-950 text-white hover:bg-slate-800;
 }
 
-.docs-table td {
-  @apply px-4 py-4 align-top leading-7 text-slate-600;
+.side-nav {
+  @apply sticky top-20 rounded-md border border-slate-200 bg-white p-4 shadow-sm;
 }
 
-.docs-sidebar-link {
-  @apply block rounded-md px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-50 hover:text-slate-950;
+.side-title,
+.section-eyebrow {
+  @apply text-xs font-semibold uppercase tracking-[0.14em] text-slate-500;
 }
 
-.docs-chip {
-  @apply inline-flex items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium uppercase tracking-[0.14em] text-slate-600;
+.side-link {
+  @apply block rounded-md px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-950;
+}
+
+.side-note {
+  @apply mt-5 rounded-md border border-slate-200 bg-slate-50 p-3 text-xs leading-6 text-slate-600;
+}
+
+.docs-panel,
+.intro-panel {
+  @apply rounded-md border border-slate-200 bg-white shadow-sm;
+}
+
+.intro-panel {
+  @apply grid gap-5 p-6 xl:grid-cols-[minmax(0,1fr)_420px];
+}
+
+.intro-copy h1 {
+  @apply mt-4 max-w-4xl text-3xl font-semibold tracking-[-0.02em] text-slate-950 md:text-4xl;
+}
+
+.intro-copy p {
+  @apply mt-4 max-w-4xl text-base leading-8 text-slate-600;
+}
+
+.status-line {
+  @apply inline-flex items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium uppercase tracking-[0.12em] text-slate-600;
+}
+
+.intro-metrics {
+  @apply grid gap-3 sm:grid-cols-3 xl:grid-cols-1;
+}
+
+.intro-metrics > div {
+  @apply rounded-md border border-slate-200 bg-slate-50 p-4;
+}
+
+.intro-metrics span {
+  @apply block text-2xl font-semibold text-red-600;
+}
+
+.intro-metrics strong {
+  @apply mt-1 block text-sm text-slate-950;
+}
+
+.intro-metrics p {
+  @apply mt-1 text-xs leading-5 text-slate-600;
+}
+
+.section-title {
+  @apply mt-2 text-2xl font-semibold tracking-[-0.02em] text-slate-950;
+}
+
+.section-text {
+  @apply mt-2 max-w-4xl text-sm leading-7 text-slate-600;
+}
+
+.track-card,
+.qa-card,
+.scenario-card,
+.runbook-card,
+.control-card,
+.file-card {
+  @apply rounded-md border border-slate-200 bg-slate-50 p-4;
+}
+
+.track-head {
+  @apply flex flex-col gap-2 border-b border-slate-200 pb-3;
+}
+
+.track-head h3,
+.qa-card h3,
+.scenario-card h3,
+.runbook-card h3,
+.control-card h3,
+.file-card h3 {
+  @apply text-base font-semibold text-slate-950;
+}
+
+.track-head span,
+.scenario-role,
+.runbook-owner {
+  @apply text-xs font-medium uppercase tracking-[0.12em] text-red-700;
+}
+
+.track-card p,
+.qa-card p,
+.control-card p,
+.file-card p {
+  @apply mt-3 text-sm leading-7 text-slate-600;
+}
+
+.tag-list {
+  @apply mt-4 flex flex-wrap gap-2;
+}
+
+.tag-list span {
+  @apply rounded-md border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-700;
+}
+
+.qa-card dl {
+  @apply mt-4 grid gap-3;
+}
+
+.qa-card dl > div {
+  @apply rounded-md border border-slate-200 bg-white p-3;
+}
+
+.qa-card dt {
+  @apply text-xs font-semibold uppercase tracking-[0.12em] text-slate-500;
+}
+
+.qa-card dd {
+  @apply mt-1 text-sm leading-6 text-slate-700;
+}
+
+.scenario-card ol,
+.runbook-card ul {
+  @apply mt-4 space-y-2 text-sm leading-6 text-slate-700;
+}
+
+.scenario-card li,
+.runbook-card li {
+  @apply ml-5;
+}
+
+.scenario-card li {
+  @apply list-decimal;
+}
+
+.runbook-card li {
+  @apply list-disc;
+}
+
+.system-row {
+  @apply grid gap-0 border-b border-slate-200 bg-white text-sm leading-6 text-slate-700 last:border-b-0 lg:grid-cols-[220px_minmax(0,1.2fr)_minmax(0,0.9fr)_minmax(0,1fr)];
+}
+
+.system-row > div {
+  @apply border-b border-slate-100 p-3 lg:border-b-0 lg:border-r lg:border-slate-100 last:border-r-0;
+}
+
+.system-head {
+  @apply bg-slate-100 text-xs font-semibold uppercase tracking-[0.12em] text-slate-600;
+}
+
+.system-area {
+  @apply flex items-center gap-2;
+}
+
+.system-area span {
+  @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-slate-200 bg-slate-50 text-red-700;
+}
+
+.docs-table-row {
+  @apply grid gap-0 border-b border-slate-200 bg-white text-sm leading-6 text-slate-700 last:border-b-0 lg:grid-cols-[minmax(220px,0.85fr)_minmax(0,1.2fr)_260px];
+}
+
+.docs-table-row > div {
+  @apply border-b border-slate-100 p-3 lg:border-b-0 lg:border-r lg:border-slate-100 last:border-r-0;
+}
+
+.docs-table-head {
+  @apply bg-slate-100 text-xs font-semibold uppercase tracking-[0.12em] text-slate-600;
+}
+
+.doc-button {
+  @apply inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50;
+}
+
+.file-card {
+  @apply flex min-h-[230px] flex-col bg-white;
+}
+
+.docs-footer {
+  @apply flex flex-col justify-between gap-3 rounded-md border border-slate-200 bg-white px-5 py-4 text-sm text-slate-600 md:flex-row md:items-center;
+}
+
+.docs-footer a {
+  @apply inline-flex items-center gap-2 text-slate-950 hover:text-red-700;
 }
 
 ::selection {
-  background: #e2e2fd;
+  background: #fee2e2;
 }
