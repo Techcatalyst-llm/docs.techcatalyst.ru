@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from 'react'
 import { Download, ExternalLink, FileText, Search } from 'lucide-react'
-import { docsSections, faqItems, navGroups, popularGuides, publicDocs, registryRequiredDocs, topNav } from '../content'
+import { allArticles, docsSections, faqItems, getArticlePath, popularGuides, publicDocs, registryRequiredDocs } from '../content'
+import { DocsSidebar, DocsTopbar } from './docs-nav'
 
 function DocLink({ fileName, label }: { fileName: string; label: string }) {
   return (
@@ -16,52 +17,19 @@ function DocLink({ fileName, label }: { fileName: string; label: string }) {
 export default function DocsHome() {
   const [query, setQuery] = useState('')
   const normalizedQuery = query.trim().toLowerCase()
-  const allLinks = docsSections.flatMap((section) =>
-    section.links.map((link) => ({
-      ...link,
-      section: section.title,
-      sectionId: section.id,
-    }))
-  )
   const searchResults = useMemo(() => {
     if (!normalizedQuery) return []
-    return allLinks.filter((item) =>
-      [item.title, item.description, item.section, ...item.tags].join(' ').toLowerCase().includes(normalizedQuery)
+    return allArticles.filter((item) =>
+      [item.title, item.description, item.sectionTitle, ...item.tags].join(' ').toLowerCase().includes(normalizedQuery)
     )
-  }, [allLinks, normalizedQuery])
+  }, [normalizedQuery])
 
   return (
     <div className="docs-page min-h-screen">
-      <header className="topbar">
-        <a className="brand" href="#top">
-          <span className="brand-mark">T</span>
-          <span>
-            <strong>Документация Takt</strong>
-            <small>Пользовательские и технические руководства</small>
-          </span>
-        </a>
-        <nav className="topnav">
-          {topNav.map((item) => (
-            <a href={item.href} key={item.href}>
-              {item.label}
-            </a>
-          ))}
-        </nav>
-      </header>
+      <DocsTopbar />
 
       <div id="top" className="layout">
-        <aside className="sidebar">
-          {navGroups.map((group) => (
-            <div className="sidebar-group" key={group.title}>
-              <div className="sidebar-title">{group.title}</div>
-              {group.links.map((link) => (
-                <a href={link.href} key={`${group.title}-${link.href}-${link.label}`}>
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          ))}
-        </aside>
+        <DocsSidebar />
 
         <main className="content">
           <section className="hero" id="overview">
@@ -82,11 +50,11 @@ export default function DocsHome() {
             </div>
             {normalizedQuery ? (
               <div className="search-results">
-                <div className="search-results-title">Результаты поиска</div>
+                <div className="search-results-title">Найдено</div>
                 {searchResults.length ? (
                   searchResults.map((item) => (
-                    <a key={`${item.sectionId}-${item.title}`} href={`#${item.sectionId}`} className="search-result">
-                      <span>{item.section}</span>
+                    <a key={`${item.sectionId}-${item.slug}`} href={item.path} className="search-result">
+                      <span>{item.sectionTitle}</span>
                       <strong>{item.title}</strong>
                       <small>{item.description}</small>
                     </a>
@@ -118,9 +86,6 @@ export default function DocsHome() {
                       <li key={step}>{step}</li>
                     ))}
                   </ol>
-                  <div className="guide-result">
-                    <strong>Результат:</strong> {guide.result}
-                  </div>
                 </article>
               ))}
             </div>
@@ -140,31 +105,17 @@ export default function DocsHome() {
                   </div>
                   <div className="article-list">
                     {section.links.map((link) => (
-                      <article className="article-card" key={link.title}>
+                      <a className="article-card article-link-card" href={getArticlePath(section.id, link.slug)} key={link.title}>
                         <div className="article-main">
                           <h4>{link.title}</h4>
                           <p>{link.description}</p>
-                          <div className="article-body">
-                            {link.body.map((paragraph) => (
-                              <p key={paragraph}>{paragraph}</p>
-                            ))}
-                          </div>
-                          {link.steps?.length ? (
-                            <ol className="article-steps">
-                              {link.steps.map((step) => (
-                                <li key={step}>{step}</li>
-                              ))}
-                            </ol>
-                          ) : null}
-                          {link.example ? <pre className="code-sample">{link.example}</pre> : null}
-                          {link.result ? <div className="article-result">{link.result}</div> : null}
                         </div>
                         <div className="tag-list">
                           {link.tags.map((tag) => (
                             <span key={tag}>{tag}</span>
                           ))}
                         </div>
-                      </article>
+                      </a>
                     ))}
                   </div>
                 </section>

@@ -160,10 +160,6 @@ body {
   @apply list-decimal;
 }
 
-.guide-result {
-  @apply mt-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm leading-6 text-emerald-900;
-}
-
 .section-list {
   @apply mt-5 space-y-4;
 }
@@ -190,6 +186,10 @@ body {
 
 .article-card {
   @apply grid gap-4 bg-white p-4 lg:grid-cols-[minmax(0,1fr)_220px];
+}
+
+.article-link-card {
+  @apply text-inherit hover:bg-slate-50;
 }
 
 .article-main {
@@ -224,16 +224,44 @@ body {
   @apply mt-4 max-w-full overflow-x-auto rounded-md border border-slate-200 bg-slate-950 p-4 text-sm leading-6 text-slate-100;
 }
 
-.article-result {
-  @apply mt-4 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm leading-6 text-slate-700;
-}
-
 .tag-list {
   @apply flex flex-wrap items-start gap-2;
 }
 
 .tag-list span {
   @apply rounded-md border border-slate-200 bg-white px-2 py-1 text-xs text-slate-600;
+}
+
+.doc-article {
+  @apply rounded-md border border-slate-200 bg-white p-5 shadow-sm md:p-8;
+}
+
+.breadcrumbs {
+  @apply mb-5 flex flex-wrap items-center gap-2 text-sm text-slate-500;
+}
+
+.breadcrumbs a {
+  @apply hover:text-slate-950;
+}
+
+.doc-article h1 {
+  @apply mt-2 max-w-4xl text-3xl font-semibold tracking-normal md:text-4xl;
+}
+
+.article-lead {
+  @apply mt-3 max-w-4xl text-base leading-8 text-slate-600;
+}
+
+.article-tags {
+  @apply mt-5;
+}
+
+.article-body-large {
+  @apply mt-8 max-w-4xl text-base leading-8;
+}
+
+.article-steps-large {
+  @apply mt-8 max-w-4xl text-base leading-8;
 }
 
 .faq-list {

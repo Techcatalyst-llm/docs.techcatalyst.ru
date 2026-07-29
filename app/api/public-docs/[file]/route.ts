@@ -11,6 +11,8 @@ const contentTypes: Record<string, string> = {
 }
 
 const docDirectories = [
+  '/var/www/techcatalyst-admin-panel/docs',
+  '/var/www/docs',
   path.join(process.cwd(), '..', 'docs'),
   path.join(process.cwd(), '..', 'techcatalyst-admin-panel', 'docs'),
 ]
