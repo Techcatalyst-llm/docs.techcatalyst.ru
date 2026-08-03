@@ -5,3 +5,10 @@
 /.cto-skill
 /.security-engineer-skill
 /.product-squad-skill
+
+# agent skills (git-native harness repos)
+.cto-skill/
+.qa-skill/
+.orchestrator-skill/
+.product-squad-skill/
+.security-engineer-skill/
