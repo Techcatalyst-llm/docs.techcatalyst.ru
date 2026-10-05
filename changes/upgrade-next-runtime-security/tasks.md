@@ -13,5 +13,5 @@
 
 ## 3. Deployment
 
-- [ ] Restart only `docs-techcatalyst-ru`.
-- [ ] Verify the public site and record the deployed revision.
+- [x] Restart only `docs-techcatalyst-ru`.
+- [x] Verify the public site and record the deployed revision (`9682b37d`).
