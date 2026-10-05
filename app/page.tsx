@@ -11,6 +11,7 @@ const sectionLinks: SectionLink[] = [
   { id: 'core-docs', label: 'Основная документация' },
   { id: 'capabilities', label: 'Функциональность' },
   { id: 'architecture', label: 'Архитектура' },
+  { id: 'ai-agents', label: 'AI-агенты' },
   { id: 'documents', label: 'Все документы' },
   { id: 'legal', label: 'Правовой статус' },
 ]
@@ -51,7 +52,7 @@ export default function HomePage() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
           <div>
             <div className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">Документация</div>
-            <div className="mt-1 text-lg font-semibold text-slate-950">Техкаталист ИИ</div>
+            <div className="mt-1 text-lg font-semibold text-slate-950">TechCatalyst Guard</div>
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-sm">
@@ -89,11 +90,12 @@ export default function HomePage() {
               Сайт правообладателя
             </div>
             <h1 className="mt-5 text-4xl font-semibold tracking-[-0.03em] text-slate-950">
-              Документация программного обеспечения «Техкаталист ИИ»
+              Документация программного обеспечения «TechCatalyst Guard»
             </h1>
             <p className="mt-4 max-w-4xl text-base leading-8 text-slate-600">
-              На странице размещены сведения о программном обеспечении, описание функциональных характеристик,
-              документация по установке и эксплуатации, а также сопроводительные технические и правовые материалы.
+              Endpoint AI-DLP агент для защиты рабочей станции AI-разработчика. Перехватывает команды AI-агентов
+              до их выполнения, маскирует чувствительные данные в выводе, обеспечивает централизованный аудит
+              и интеграцию с корпоративной инфраструктурой безопасности.
             </p>
           </section>
 
@@ -118,11 +120,11 @@ export default function HomePage() {
                 <tbody className="divide-y divide-slate-200">
                   <tr className="bg-white">
                     <th className="w-56">Наименование</th>
-                    <td>Техкаталист ИИ</td>
+                    <td>TechCatalyst Guard</td>
                   </tr>
                   <tr className="bg-slate-50">
                     <th>Основной класс ПО</th>
-                    <td>02.06 Серверное и связующее программное обеспечение</td>
+                    <td>02.12 Средства обеспечения информационной безопасности</td>
                   </tr>
                   <tr className="bg-white">
                     <th>Дополнительный класс ПО</th>
@@ -135,6 +137,14 @@ export default function HomePage() {
                   <tr className="bg-white">
                     <th>ОКПД2</th>
                     <td>62.01.29.000 и 58.29.50.000</td>
+                  </tr>
+                  <tr className="bg-slate-50">
+                    <th>Версия</th>
+                    <td>0.40.19</td>
+                  </tr>
+                  <tr className="bg-white">
+                    <th>Платформы</th>
+                    <td>macOS (Intel + Apple Silicon), Linux (amd64 + arm64)</td>
                   </tr>
                 </tbody>
               </table>
@@ -200,27 +210,92 @@ export default function HomePage() {
 
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5">
-                <div className="text-sm font-semibold text-slate-950">Технологический стек</div>
+                <div className="text-sm font-semibold text-slate-950">Station Agent</div>
                 <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
-                  <li>Next.js 14</li>
-                  <li>TypeScript</li>
-                  <li>React</li>
-                  <li>Node.js</li>
-                  <li>Prisma ORM</li>
-                  <li>PostgreSQL</li>
+                  <li>Go (compiled binary)</li>
+                  <li>Kernel enforcement: Endpoint Security Framework (macOS), fanotify (Linux)</li>
+                  <li>Shell hooks: zsh preexec, bash DEBUG trap, PowerShell, cmd.exe</li>
+                  <li>MCP proxy: stdio JSON-RPC</li>
+                  <li>Clipboard monitoring: stdin pipe mode</li>
+                </ul>
+              </div>
+
+              <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5">
+                <div className="text-sm font-semibold text-slate-950">Control Plane</div>
+                <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
+                  <li>Go HTTP server</li>
+                  <li>PostgreSQL 16 (события, аудит, политики, очередь экспорта)</li>
+                  <li>Keycloak 25 (OIDC авторизация)</li>
+                  <li>Grafana Loki (лог-экспорт)</li>
+                  <li>Admin UI: server-rendered HTML</li>
                 </ul>
               </div>
 
               <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5">
                 <div className="text-sm font-semibold text-slate-950">Развертывание</div>
                 <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
-                  <li>production-сборка выполняется командой `npm run build`</li>
-                  <li>серверный запуск выполняется через `next start` или `pm2`</li>
-                  <li>поддерживается развертывание на VPS, VDS и совместимой серверной инфраструктуре</li>
-                  <li>доступ к данным обеспечивается через PostgreSQL и серверные API-маршруты</li>
+                  <li>Docker Compose для control plane (5 сервисов)</li>
+                  <li>Station-agent: single binary, enrollment-токен для регистрации</li>
+                  <li>On-premise: полная автономность, не требует интернет</li>
+                  <li>Поддержка VPS, VDS и bare-metal</li>
+                </ul>
+              </div>
+
+              <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-5">
+                <div className="text-sm font-semibold text-slate-950">Безопасность</div>
+                <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
+                  <li>Ed25519 подпись политик — tamper detection</li>
+                  <li>Fail-closed: нет trust material → отказ работать</li>
+                  <li>Zero-knowledge экспорт: SHA-256 хеши вместо raw content</li>
+                  <li>RBAC: Administrator, Security Officer, Viewer</li>
                 </ul>
               </div>
             </div>
+          </section>
+
+          <section id="ai-agents" className="docs-panel p-8">
+            <SectionTitle
+              id="ai-agents-title"
+              title="Поддерживаемые AI-агенты"
+              description="Guard автоматически детектирует запуск AI-агентов и настраивает прозрачное mediation-окружение."
+            />
+
+            <div className="mt-6 overflow-hidden rounded-xl border border-slate-200">
+              <table className="docs-table w-full text-sm">
+                <thead className="bg-slate-50 text-slate-700">
+                  <tr>
+                    <th>Команда запуска</th>
+                    <th>Идентификатор агента</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200 bg-white">
+                  {[
+                    ['claude', 'claude-code'],
+                    ['claude-code', 'claude-code'],
+                    ['codex', 'codex'],
+                    ['qwen', 'qwen-code'],
+                    ['qwen-code', 'qwen-code'],
+                    ['cursor-agent', 'cursor'],
+                    ['aider', 'aider'],
+                    ['gemini', 'gemini-cli'],
+                    ['copilot', 'copilot-cli'],
+                    ['goose', 'goose'],
+                    ['amp', 'amp'],
+                    ['opencode', 'opencode'],
+                  ].map(([cmd, id]) => (
+                    <tr key={cmd}>
+                      <td className="font-mono text-slate-950">{cmd}</td>
+                      <td>{id}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="mt-4 text-sm leading-7 text-slate-600">
+              Agent не требует переконфигурации AI-агента. Guard работает как прозрачный enforcement layer —
+              перехватывает команды на уровне shell и системных вызовов, не модифицируя бинарные файлы агентов.
+            </p>
           </section>
 
           <section id="documents" className="docs-panel p-8">

@@ -25,12 +25,12 @@ export const overviewCards: OverviewCard[] = [
   {
     icon: <Blocks className="h-5 w-5" />,
     title: 'Продукт',
-    text: 'Программное обеспечение «Техкаталист ИИ» для централизованного управления корпоративным доступом к AI-функциональности, маршрутизации запросов, учета потребления и мониторинга.',
+    text: 'Программное обеспечение «TechCatalyst Guard» — endpoint AI-DLP агент для защиты рабочей станции AI-разработчика. Перехватывает команды AI-агентов до их выполнения, маскирует чувствительные данные в выводе и обеспечивает централизованный аудит.',
   },
   {
     icon: <Layers3 className="h-5 w-5" />,
     title: 'Класс',
-    text: 'Основной класс ПО: 02.06 Серверное и связующее программное обеспечение. Дополнительно: 02.08 Средства мониторинга и управления.',
+    text: 'Основной класс ПО: 02.12 Средства обеспечения информационной безопасности. Дополнительно: 02.08 Средства мониторинга и управления.',
   },
   {
     icon: <ShieldCheck className="h-5 w-5" />,
@@ -46,33 +46,72 @@ export const overviewCards: OverviewCard[] = [
 
 export const capabilityGroups: CapabilityGroup[] = [
   {
-    title: 'Основные функции',
+    title: 'Shell interception и блокировка команд',
     items: [
-      'авторизация пользователей и разграничение прав доступа по ролям',
-      'управление организациями, пользователями, подрядчиками и API-ключами',
-      'маршрутизация запросов к OpenAI, Anthropic, Gemini, Grok, DeepSeek и другим совместимым провайдерам',
-      'учет запросов, токенов, стоимости, лимитов и баланса',
-      'мониторинг инфраструктуры, статусов ключей, уведомления и отчетность',
+      'перехват команд AI-агентов (Claude Code, Codex, Qwen Code, Cursor, Gemini CLI) через shell hooks',
+      'оценка команды по подписанной политике до её выполнения (block / allow / mask_output)',
+      'kernel-level enforcement на macOS (Endpoint Security Framework) и Linux (fanotify)',
+      'маскирование чувствительных данных в stdout команд в реальном времени (streaming)',
+      'классификация команд по уровню риска (git push — block, git commit — warn)',
+    ],
+  },
+  {
+    title: 'Детекция чувствительных данных',
+    items: [
+      'сканирование файлов проекта: секреты (AWS keys, DB passwords, JWT tokens, high-entropy strings)',
+      'детекция персональных данных: ФИО, СНИЛС, паспорт, ИНН, email, телефон (русский и английский)',
+      'энтропийный анализ для обнаружения высокоэнтропийных строк',
+      'clipboard monitoring: маскирование секретов и PII при копировании в буфер обмена',
+      'репозиторийный сканер: анализ рабочей директории при запуске AI-агента',
+    ],
+  },
+  {
+    title: 'MCP proxy и защита ресурсов',
+    items: [
+      'stdio JSON-RPC прокси между AI-агентом и MCP-сервером',
+      'блокировка запросов к защищённым ресурсам (.env, .ssh, ключевой материал)',
+      'маскирование чувствительных данных в ответах MCP-серверов',
+      'конфигурируемый через политику набор защищённых путей',
+    ],
+  },
+  {
+    title: 'Control plane и аудит',
+    items: [
+      'централизованная контрольная панель (Go + PostgreSQL)',
+      'real-time события: все решения агента доставляются в control plane',
+      'полный audit trail: кто, когда, какое правило, какой детектор',
+      'zero-knowledge экспорт: raw content заменяется SHA-256 хешами при синхронизации',
+      'RBAC: роли Administrator, Security Officer, Viewer',
+    ],
+  },
+  {
+    title: 'Управление политиками',
+    items: [
+      'политики подписаны Ed25519 — tamper detection на уровне ядра',
+      'версионирование политик с rollback capability',
+      'fail-closed: отсутствие trust material блокирует работу агента',
+      'правила: command_contains, regex, surface (shell/mcp/clipboard), scope (directory/user/group/workstation)',
+      'severity levels: critical, high, medium, low',
+    ],
+  },
+  {
+    title: 'Интеграция и экспорт',
+    items: [
+      'Grafana Loki push: built-in HTTP exporter с durable Postgres-backed queue и exponential backoff',
+      'Keycloak OIDC: интеграция с корпоративным SSO из коробки',
+      'три типа экспортируемых данных: security events, audit log, detector metrics',
+      'API: dry-run, статус очереди, принудительный flush',
+      'ручной экспорт в JSON через admin UI',
     ],
   },
   {
     title: 'Техническая архитектура',
     items: [
-      'Next.js 14, TypeScript, React и Node.js',
-      'Prisma ORM и PostgreSQL для модели данных и хранения',
-      'серверные API routes для бизнес-логики и интеграций',
-      'production-build через npm run build с результатами в директории .next',
-      'развертывание на VPS/VDS или иной совместимой серверной инфраструктуре',
-    ],
-  },
-  {
-    title: 'Проверка и эксплуатация',
-    items: [
-      'установка по инструкции с PostgreSQL, Prisma и environment-переменными',
-      'тестовые учетные записи и тестовые ключи вместо production-данных',
-      'отдельные документы по функциональности, установке и эксплуатации программного обеспечения',
-      'описание жизненного цикла, поддержки, устранения неисправностей и обновлений',
-      'отдельные справки по сайту, тарифной политике и основаниям возникновения прав',
+      'station-agent: compiled Go binary (macOS amd64/arm64, Linux amd64/arm64)',
+      'control plane: Go HTTP server + PostgreSQL + Keycloak OIDC + Loki',
+      'admin UI: server-rendered HTML (vanilla JS, Tailwind CSS)',
+      'kernel enforcement: Endpoint Security Framework (macOS), fanotify (Linux)',
+      'shell hooks: preexec (zsh), DEBUG trap (bash), PowerShell, cmd.exe',
     ],
   },
 ]
@@ -80,26 +119,26 @@ export const capabilityGroups: CapabilityGroup[] = [
 export const publicDocs: PublicDoc[] = [
   {
     slug: 'functional-spec',
-    title: 'Описание функциональных характеристик программного обеспечения «Техкаталист ИИ»',
+    title: 'Описание функциональных характеристик ПО «TechCatalyst Guard»',
     description:
-      'Основное описание назначения, пользовательских и административных функций, архитектурных модулей и сценариев применения программного обеспечения.',
-    txtFile: 'opisanie_funkcionalnyh_harakteristik_po_tehkatalist_ii.txt',
+      'Описание назначения, пользовательских и административных функций, архитектурных модулей и сценариев применения программного обеспечения.',
+    txtFile: 'guard_functional_spec.txt',
     registryRequired: true,
   },
   {
     slug: 'installation-guide',
-    title: 'Документация по установке программного обеспечения «Техкаталист ИИ»',
+    title: 'Документация по установке ПО «TechCatalyst Guard»',
     description:
-      'Информация, необходимая для развертывания, настройки окружения, подготовки зависимостей, базы данных и первого запуска программного обеспечения.',
-    txtFile: 'dokumentaciya_po_ustanovke_po_tehkatalist_ii.txt',
+      'Инструкция по развертыванию control plane (Docker Compose), установке station-agent на рабочую станцию, настройке enrollment и первой публикации политики.',
+    txtFile: 'guard_installation_guide.txt',
     registryRequired: true,
   },
   {
     slug: 'operations-guide',
-    title: 'Документация по эксплуатации программного обеспечения «Техкаталист ИИ»',
+    title: 'Документация по эксплуатации ПО «TechCatalyst Guard»',
     description:
-      'Информация, необходимая для эксплуатации, работы с ролями, типовыми сценариями, ограничениями, сопровождением и использованием тестового контура.',
-    txtFile: 'dokumentaciya_po_ekspluatacii_po_tehkatalist_ii.txt',
+      'Управление политиками, мониторинг событий, настройка Loki-экспорта, Keycloak-интеграция, troubleshooting и типовые сценарии эксплуатации.',
+    txtFile: 'guard_operations_guide.txt',
     registryRequired: true,
   },
   {
@@ -107,56 +146,56 @@ export const publicDocs: PublicDoc[] = [
     title: 'Продукт и правовой статус',
     description:
       'Общее описание программного продукта, классификация, модель предоставления и сведения об исключительном праве.',
-    txtFile: 'spravka_samostoyatelnoe_sozdanie_po_techcatalyst_ai.txt',
-    docxFile: 'spravka_samostoyatelnoe_sozdanie_po_techcatalyst_ai.docx',
+    txtFile: 'guard_product_overview.txt',
+    docxFile: 'guard_product_overview.docx',
   },
   {
     slug: 'architecture',
     title: 'Техническая архитектура',
     description:
-      'Описание frontend, backend, базы данных, API, модуля маршрутизации, мониторинга и биллинга.',
-    txtFile: 'opisanie_tehnicheskoy_arhitektury_techcatalyst_ai.txt',
-    docxFile: 'opisanie_tehnicheskoy_arhitektury_techcatalyst_ai.docx',
+      'Описание station-agent (Go binary), control plane (Go + PostgreSQL), kernel enforcement (ESF / fanotify), shell hooks, MCP proxy и admin UI.',
+    txtFile: 'guard_architecture.txt',
+    docxFile: 'guard_architecture.docx',
   },
   {
-    slug: 'storage-and-build',
-    title: 'Хранение и компиляция',
+    slug: 'security-model',
+    title: 'Модель безопасности',
     description:
-      'Где хранятся исходники и сборочные артефакты, как выполняется компиляция и production-build.',
-    txtFile: 'opisanie_sredstv_hraneniya_i_kompilyacii_techcatalyst_ai.txt',
-    docxFile: 'opisanie_sredstv_hraneniya_i_kompilyacii_techcatalyst_ai.docx',
+      'Описание модели угроз, fail-closed design, Ed25519 подпись политик, zero-knowledge экспорт, kernel-level enforcement и защиты от tampering.',
+    txtFile: 'guard_security_model.txt',
+    docxFile: 'guard_security_model.docx',
   },
   {
     slug: 'lifecycle',
     title: 'Жизненный цикл и поддержка',
     description:
-      'Процессы эксплуатации, мониторинга, устранения неисправностей, обновлений и требования к персоналу поддержки.',
-    txtFile: 'opisanie_processov_podderzhaniya_zhiznennogo_cikla_techcatalyst_ai.txt',
-    docxFile: 'opisanie_processov_podderzhaniya_zhiznennogo_cikla_techcatalyst_ai.docx',
+      'Процессы обновления политик, ротации ключей подписи, обновления station-agent, поддержки и устранения неисправностей.',
+    txtFile: 'guard_lifecycle.txt',
+    docxFile: 'guard_lifecycle.docx',
+  },
+  {
+    slug: 'sbom',
+    title: 'SBOM и supply chain',
+    description:
+      'CycloneDX SBOM для station-agent (Go binary), govulncheck в CI pipeline, блокировка релиза при уязвимостях зависимостей.',
+    txtFile: 'guard_sbom.txt',
+    docxFile: 'guard_sbom.docx',
   },
   {
     slug: 'tariffs',
     title: 'Тарифная политика',
     description:
       'Модель неисключительной лицензии, тарифицируемые позиции и принципы определения стоимости по договору.',
-    txtFile: 'tarifnaya_politika_techcatalyst_ai.txt',
-    docxFile: 'tarifnaya_politika_techcatalyst_ai.docx',
+    txtFile: 'guard_tariffs.txt',
+    docxFile: 'guard_tariffs.docx',
   },
   {
     slug: 'site-ownership',
     title: 'Принадлежность сайта',
     description:
       'Справка о том, что сайты и домены используются правообладателем для размещения и документирования ПО.',
-    txtFile: 'spravka_o_prinadlezhnosti_saita_techcatalyst_ai.txt',
-    docxFile: 'spravka_o_prinadlezhnosti_saita_techcatalyst_ai.docx',
-  },
-  {
-    slug: 'work-report',
-    title: 'Отчет о проведении работ',
-    description:
-      'Фиксация выполненных работ по созданию платформы, модульного состава и результата разработки.',
-    txtFile: 'otchet_o_provedenii_rabot_techcatalyst_ai.txt',
-    docxFile: 'otchet_o_provedenii_rabot_techcatalyst_ai.docx',
+    txtFile: 'guard_site_ownership.txt',
+    docxFile: 'guard_site_ownership.docx',
   },
 ]
 
